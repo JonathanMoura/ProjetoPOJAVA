@@ -11,6 +11,7 @@
 package dados;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import entidades.Pedido;
@@ -46,4 +47,48 @@ public class RepPedidoArray implements IRepositorioPedido {
 		}
 		return pedidos;
 	}
+	
+	public List procurar(String cpf, Date de, Date ate){
+		i = 0;
+		List pedidos = new ArrayList();
+		if (indice != 0) {			
+			while (i < indice) {
+				if(cpf.equals(repositorio[i].getVendedor().getCpf()) 
+					& (de.equals(repositorio[i].getData()) || de.before(repositorio[i].getData()))
+					& (ate.equals(repositorio[i].getData()) || ate.after(repositorio[i].getData()))){
+					pedidos.add(repositorio[i]);
+				}
+				i++;
+			}
+		}
+		return pedidos;
+	}
+	
+	public List procurar(Date de, Date ate){
+		i = 0;
+		List pedidos = new ArrayList();
+		if (indice != 0) {			
+			while (i < indice) {
+				if(( de.equals(repositorio[i].getData()) || de.before(repositorio[i].getData()) )
+					& ( ate.equals(repositorio[i].getData()) || ate.after(repositorio[i].getData()) )){
+					pedidos.add(repositorio[i]);
+				}
+				i++;
+			}
+		}
+		return pedidos;
+	}
+	
+	public List procurar(){
+		i = 0;
+		List pedidos = new ArrayList();
+		if (indice != 0) {			
+			while (i < indice) {
+				pedidos.add(repositorio[i]);
+				i++;
+			}
+		}
+		return pedidos;
+	}
+	
 }

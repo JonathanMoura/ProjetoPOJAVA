@@ -40,10 +40,11 @@ public class Mensagem {
 	public static final String CONFDADOS = "Você confirma os dados editados? ";
 	public static final String CONFPRODUTO = "Você confirma o cadastro do produto? ";
 	public static final String CONFDISTRIBUI = "Você confirma a distribuição dos produtos? ";
-	public static final String CADASTRADO = "Cadastrado! ";
+	public static final String CADASTRADO = "Cadastrado realizado com sucesso! ";
 	public static final String EXCLUIDO = "Excluído! ";
 	public static final String EDICAO = "Edição concluída! ";
 	public static final String DISTRIBUIDO = "Produto distribuído! ";
+	public static final String DATAEXCP = "Informe uma data \"de\" e \"ate\".";
 	//Informações de ajuda
 		public static final String AJUDACADPROD = "Para cadastrar um produto é necessário "+"\n"
 												+ "informar o nome do produto, uma descrição "+"\n"
@@ -67,5 +68,15 @@ public class Mensagem {
 				  								+ "selecione o produto na tabela do vendedor e informe "+"\n"
 				  								+ "a quantidade a ser removida, em seguida, pressione o "+"\n"
 				  								+ "botão remover.";
-	
+		
+		public static final String AJUDARELVEND = "Para buscar os pedidos cadastrados por tdos os vendedores "+"\n"  
+												+ "subordinados pressione o botão \"buscar\". Para procurar "+"\n"  
+												+ "pelos pedidos inseridos por um único vendedor, insira o "+"\n"  
+												+ "CPF do vendedor. Para ver os pedidos cadastrados em um "+"\n"  
+												+ "determinado intervalo de tempo, selecione uma data \"de\" e \"ate\"";
+		
+		public static final String AJUDACADPED  = "Para cadastrar um pedido, informe o tipo do cliente e "+"\n"  
+												+ "insira as informações solicitadas, em seguida, clique "+"\n"  
+												+ "em \"próximo\" e selecione na sua tabela e distribua os"+"\n"  
+												+ "seus produtos que o cliente deseja adquirir.";
 }

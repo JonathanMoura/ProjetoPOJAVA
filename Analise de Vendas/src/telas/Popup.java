@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 
 import excecoes.CPFNaoEncontradoException;
 import excecoes.CampoVazioException;
+import excecoes.DataException;
 import excecoes.EmailInvalidoException;
 import excecoes.SenhaInvalidaException;
 import negocio.Mensagem;
@@ -26,6 +27,7 @@ public class Popup {
 	private static final String MSGALERT = "Mensagem de alerta";
 	private static final String MSGERROR = "Mensagem de erro";
 	private static final String MSGINFO = "Informações de ajuda";
+	private static final String MSGSUC = "Mensagem de sucesso";
 	private static int confirm;
 
 public static void ConfirmarCadastro() {
@@ -89,9 +91,21 @@ public static void ConfirmarCadastro() {
 		JOptionPane.showMessageDialog(null, Mensagem.CADQUANTERRO,MSGALERT,JOptionPane.WARNING_MESSAGE);
 	}
 	public static void infoCadProd(){
-		JOptionPane.showMessageDialog(null, Mensagem.AJUDACADPROD,MSGINFO,JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, Mensagem.AJUDACADPROD,MSGINFO,JOptionPane.QUESTION_MESSAGE);
 	}
 	public static void infoGerProd(){
-		JOptionPane.showMessageDialog(null, Mensagem.AJUDAGERPROD,MSGINFO,JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, Mensagem.AJUDAGERPROD,MSGINFO,JOptionPane.QUESTION_MESSAGE);
+	}
+	public static void infoRelVend(){
+		JOptionPane.showMessageDialog(null, Mensagem.AJUDARELVEND,MSGINFO,JOptionPane.QUESTION_MESSAGE);
+	}
+	public static void infoCadPed(){
+		JOptionPane.showMessageDialog(null, Mensagem.AJUDACADPED,MSGINFO,JOptionPane.QUESTION_MESSAGE);
+	}
+	public static void dataExc(DataException de){
+		JOptionPane.showMessageDialog(null,de.getMessage() ,MSGALERT,JOptionPane.WARNING_MESSAGE);
+	}
+	public static void cadSucesso(){
+		JOptionPane.showMessageDialog(null, Mensagem.CADASTRADO,MSGSUC,JOptionPane.INFORMATION_MESSAGE);
 	}
 }

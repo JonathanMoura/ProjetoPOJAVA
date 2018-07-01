@@ -17,6 +17,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -82,7 +85,7 @@ public class RepPedidoBD extends RepositorioBD implements IRepositorioPedido{
 				Vendedor vendedor = new Vendedor();
 				Cliente cliente = new Cliente();
 				ItemPedido itemPedido = new ItemPedido();
-				String data;
+				Date data;
 								
 				vendedor.setNome(rs.getString("vendedor_nome"));
 				vendedor.setCpf(rs.getString("vendedor_cpf"));
@@ -95,13 +98,160 @@ public class RepPedidoBD extends RepositorioBD implements IRepositorioPedido{
 				itemPedido.setQuantidade(rs.getInt("quantidade"));
 				itemPedido.setValorTotal(rs.getDouble("valor_total"));
 				
-				data = rs.getString("data");
+				data = rs.getDate("data");
 				
 				pedido.setCliente(cliente);
 				pedido.setVendedor(vendedor);
 				pedido.setItemPedido(itemPedido);
 				pedido.setData(data);
 					
+				pedidos.add(pedido);
+			}
+			if(!pedidos.isEmpty()){
+				return pedidos;
+			} else {
+				System.err.println("Pedido não encontrado");
+				return new ArrayList();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList();
+		}
+	}
+	
+	public List procurar(String cpf,Date de, Date ate) {
+		DateFormat dataFormato = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String dataDe = dataFormato.format(de);
+		String dataAte = dataFormato.format(ate);
+		
+		String where = "WHERE vendedor_cpf = " + "\'"+cpf+"\'" 
+					 + "AND data BETWEEN " + "\'" + dataDe + "\'" + " AND " + "\'" + dataAte + "\'";
+		String comando = PROCURAR + where;
+		List pedidos = new ArrayList();
+		try {
+			Statement stm = con.createStatement(1, 0);
+			ResultSet rs = stm.executeQuery(comando);
+			while(rs.next()){
+				Pedido pedido = new Pedido();
+				Vendedor vendedor = new Vendedor();
+				Cliente cliente = new Cliente();
+				ItemPedido itemPedido = new ItemPedido();
+				Date data;
+							
+				vendedor.setNome(rs.getString("vendedor_nome"));
+				vendedor.setCpf(rs.getString("vendedor_cpf"));
+			
+				cliente.setNome(rs.getString("cliente_nome"));
+				cliente.setCpf(rs.getString("cliente_cpf"));
+				cliente.setCnpj(rs.getString("cliente_cnpj"));
+		
+				itemPedido.setProduto(rs.getString("produto_nome"));
+				itemPedido.setQuantidade(rs.getInt("quantidade"));
+				itemPedido.setValorTotal(rs.getDouble("valor_total"));
+			
+				data = rs.getDate("data");
+			
+				pedido.setCliente(cliente);
+				pedido.setVendedor(vendedor);
+				pedido.setItemPedido(itemPedido);
+				pedido.setData(data);
+				
+				pedidos.add(pedido);
+			}
+			if(!pedidos.isEmpty()){
+				return pedidos;
+			} else {
+				System.err.println("Pedido não encontrado");
+				return new ArrayList();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList();
+		}
+	}
+	
+	public List procurar(Date de, Date ate){
+		DateFormat dataFormato = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String dataDe = dataFormato.format(de);
+		String dataAte = dataFormato.format(ate);
+		
+		String where = "WHERE data BETWEEN " + "\'" + dataDe + "\'" + " AND " + "\'" + dataAte + "\'";
+		String comando = PROCURAR + where;
+		List pedidos = new ArrayList();
+		try {
+			Statement stm = con.createStatement(1, 0);
+			ResultSet rs = stm.executeQuery(comando);
+			while(rs.next()){
+				Pedido pedido = new Pedido();
+				Vendedor vendedor = new Vendedor();
+				Cliente cliente = new Cliente();
+				ItemPedido itemPedido = new ItemPedido();
+				Date data;
+							
+				vendedor.setNome(rs.getString("vendedor_nome"));
+				vendedor.setCpf(rs.getString("vendedor_cpf"));
+			
+				cliente.setNome(rs.getString("cliente_nome"));
+				cliente.setCpf(rs.getString("cliente_cpf"));
+				cliente.setCnpj(rs.getString("cliente_cnpj"));
+		
+				itemPedido.setProduto(rs.getString("produto_nome"));
+				itemPedido.setQuantidade(rs.getInt("quantidade"));
+				itemPedido.setValorTotal(rs.getDouble("valor_total"));
+			
+				data = rs.getDate("data");
+			
+				pedido.setCliente(cliente);
+				pedido.setVendedor(vendedor);
+				pedido.setItemPedido(itemPedido);
+				pedido.setData(data);
+				
+				pedidos.add(pedido);
+			}
+			if(!pedidos.isEmpty()){
+				return pedidos;
+			} else {
+				System.err.println("Pedido não encontrado");
+				return new ArrayList();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList();
+		}
+	}
+	
+	public List procurar(){
+		List pedidos = new ArrayList();
+		try {
+			Statement stm = con.createStatement(1, 0);
+			ResultSet rs = stm.executeQuery(PROCURAR);
+			while(rs.next()){
+				Pedido pedido = new Pedido();
+				Vendedor vendedor = new Vendedor();
+				Cliente cliente = new Cliente();
+				ItemPedido itemPedido = new ItemPedido();
+				Date data;
+							
+				vendedor.setNome(rs.getString("vendedor_nome"));
+				vendedor.setCpf(rs.getString("vendedor_cpf"));
+			
+				cliente.setNome(rs.getString("cliente_nome"));
+				cliente.setCpf(rs.getString("cliente_cpf"));
+				cliente.setCnpj(rs.getString("cliente_cnpj"));
+		
+				itemPedido.setProduto(rs.getString("produto_nome"));
+				itemPedido.setQuantidade(rs.getInt("quantidade"));
+				itemPedido.setValorTotal(rs.getDouble("valor_total"));
+			
+				data = rs.getDate("data");
+			
+				pedido.setCliente(cliente);
+				pedido.setVendedor(vendedor);
+				pedido.setItemPedido(itemPedido);
+				pedido.setData(data);
+				
 				pedidos.add(pedido);
 			}
 			if(!pedidos.isEmpty()){

@@ -26,7 +26,7 @@ public class RepVendProdBD extends RepositorioBD implements IRepositorioVendProd
 	private static final String INSERIR   = "INSERT INTO vendedor_produto ";
 	private static final String PROCURAR  = "SELECT * FROM vendedor_produto ";
 	private static final String ATUALIZAR = "UPDATE vendedor_produto SET quantidade = ? WHERE produto_nome = ? AND vendedor_cpf = ?";
-	private static final String REMOVER   = "DELETE FROM vendedor_produto WHERE produto_nome = AND vendedor_cpf = ?";
+	private static final String REMOVER   = "DELETE FROM vendedor_produto WHERE produto_nome = ? AND vendedor_cpf = ?";
 	private static final String CAMPOS    = "(produto_nome, descricao, quantidade, valor, vendedor_cpf, id) ";	
 	
 	public void inserir(String vendedorCpf, Produto produto){

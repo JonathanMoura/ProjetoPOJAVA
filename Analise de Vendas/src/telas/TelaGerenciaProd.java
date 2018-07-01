@@ -407,6 +407,7 @@ public class TelaGerenciaProd extends JFrame {
 		scrollPaneVendProd.setVisible(false);
 		
 		btnRemoverProdVend = new JButton("Remover");
+		btnRemoverProdVend.setEnabled(false);
 		btnRemoverProdVend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int[] linhas = tableVendProd.getSelectedRows(); 

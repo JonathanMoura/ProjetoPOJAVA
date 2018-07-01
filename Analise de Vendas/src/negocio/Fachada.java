@@ -11,6 +11,7 @@
  *-------------------------------------------*/
 package negocio;
 import java.sql.ResultSet;
+import java.util.Date;
 import java.util.List;
 
 import dados.*;
@@ -19,6 +20,7 @@ import entidades.Pedido;
 import entidades.Produto;
 import entidades.Vendedor;
 import excecoes.CPFNaoEncontradoException;
+import excecoes.DataException;
 import interfaces.IRepositorioFuncionario;
 import interfaces.IRepositorioPedido;
 import interfaces.IRepositorioProduto;
@@ -116,7 +118,7 @@ public class Fachada {
 	public void cadastrar(Pedido pedido) {
 		this.pedido.inserir(pedido);
 	}
-	public List procurarPedido(String cpf, String dataDe, String dataAte){
+	public List procurarPedido(String cpf, Date dataDe, Date dataAte)throws DataException{
 		return this.pedido.procurar(cpf,dataDe,dataAte);
 	}
 	//FIM CRUD de pedido

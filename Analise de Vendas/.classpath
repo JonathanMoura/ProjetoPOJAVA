@@ -14,5 +14,9 @@
 	<classpathentry kind="lib" path="Biblioteca/poi-3.9.jar"/>
 	<classpathentry kind="lib" path="Biblioteca/postgresql-42.2.2.jar"/>
 	<classpathentry kind="lib" path="Biblioteca/servlet-api-2.4.jar"/>
+	<classpathentry kind="lib" path="Biblioteca/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="Biblioteca/jgoodies-common-1.2.0.jar"/>
+	<classpathentry kind="lib" path="Biblioteca/jgoodies-looks-2.4.1.jar"/>
+	<classpathentry kind="lib" path="Biblioteca/junit-4.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

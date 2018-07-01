@@ -21,6 +21,7 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -38,12 +39,18 @@ import javax.swing.border.EmptyBorder;
 
 import entidades.Pedido;
 import entidades.Relatorio;
+import excecoes.DataException;
 import negocio.Fachada;
 import negocio.ModeloTabelaPedido;
 import negocio.ModeloTabelaVendProd;
 import negocio.ValidarDados;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import com.toedter.calendar.JDateChooser;
+import java.beans.PropertyChangeListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.beans.PropertyChangeEvent;
 
 public class TelaRelatorioVendas extends JFrame {
 
@@ -52,8 +59,8 @@ public class TelaRelatorioVendas extends JFrame {
 	private JTextField textFieldVendedorCpf;
 	private JTable tablePedidos;
 	private ModeloTabelaPedido modeloTabelaPedido;
-	private JTextField textFieldDataDe;
-	private JTextField textFieldDataAte;
+	private JDateChooser dataDeSelecionada;
+	private JDateChooser dataAteSelecionada;
 	
 	public void limparCampos(){
 		
@@ -176,7 +183,7 @@ public class TelaRelatorioVendas extends JFrame {
 		contentPane.add(btnInfoAjuda);
 		btnInfoAjuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				Popup.infoRelVend();
 			}
 		});
 		btnInfoAjuda.setIcon(new ImageIcon(TelaCadProd.class.getResource("/imagem/question.png")));
@@ -208,18 +215,8 @@ public class TelaRelatorioVendas extends JFrame {
 		
 		JLabel lblAte = new JLabel("at\u00E9");
 		lblAte.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblAte.setBounds(247, 97, 40, 14);
+		lblAte.setBounds(279, 97, 40, 14);
 		panel.add(lblAte);
-		
-		textFieldDataDe = new JTextField();
-		textFieldDataDe.setBounds(126, 96, 87, 20);
-		panel.add(textFieldDataDe);
-		textFieldDataDe.setColumns(10);
-		
-		textFieldDataAte = new JTextField();
-		textFieldDataAte.setColumns(10);
-		textFieldDataAte.setBounds(285, 96, 87, 20);
-		panel.add(textFieldDataAte);
 		
 		JButton btnNewButton = new JButton("Buscar");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -227,20 +224,20 @@ public class TelaRelatorioVendas extends JFrame {
 				while(modeloTabelaPedido.getRowCount()>0)
 					modeloTabelaPedido.removePedidoAt(0);
 				
-				String cpf = textFieldVendedorCpf.getText();
-				String dataDe = textFieldDataDe.getText();
-				String dataAte = textFieldDataAte.getText();
+				String cpf = textFieldVendedorCpf.getText();				
+				Date dataDe = dataDeSelecionada.getDate();
+				Date dataAte = dataAteSelecionada.getDate();
+				DateFormat dataFormato = new SimpleDateFormat("dd/MM/yyyy");
 				ArrayList<Pedido> lista;
 				List relatorio = new ArrayList();
-				
-				if(ValidarDados.validarData(dataDe, dataAte)){
+				try{
 					lista = (ArrayList<Pedido>) Fachada.getInstance().procurarPedido(cpf,dataDe,dataAte);
-					
+								
 					if(!lista.isEmpty()){
 						for(Pedido p: lista){
 							Relatorio r = new Relatorio();
 							r.setCliente(p.getCliente().getNome());
-							r.setData(p.getData());
+							r.setData(dataFormato.format(p.getData()));
 							r.setItemPedido(p.getItemPedido().getProduto());
 							r.setQuantidade(p.getItemPedido().getQuantidade());
 							r.setValor_total(p.getItemPedido().getValorTotal());
@@ -249,11 +246,21 @@ public class TelaRelatorioVendas extends JFrame {
 						}
 						modeloTabelaPedido.addPedidoList(relatorio);
 					}
+				}catch(DataException de){
+					Popup.dataExc(de);
 				}
 			}
 		});
-		btnNewButton.setBounds(399, 95, 89, 23);
+		btnNewButton.setBounds(46, 144, 89, 23);
 		panel.add(btnNewButton);
+		
+		dataDeSelecionada = new JDateChooser();
+		dataDeSelecionada.setBounds(122, 95, 127, 20);
+		panel.add(dataDeSelecionada);
+		
+		dataAteSelecionada = new JDateChooser();
+		dataAteSelecionada.setBounds(309, 95, 127, 20);
+		panel.add(dataAteSelecionada);
 		
 	}
 }

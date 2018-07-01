@@ -78,6 +78,9 @@ public class TelaCadPedido extends JFrame {
 	private Cliente cliente;
 	private JButton btnSair;
 	private JButton btnCadastrar;
+	private JPanel panelCliente;
+	private JPanel panelProduto;
+	private JButton btnProximo; 
 	private ArrayList<Produto> produtoVendido = new ArrayList();
 	
 	public static TelaCadPedido getInstance() {
@@ -87,9 +90,17 @@ public class TelaCadPedido extends JFrame {
 	}
 	
 	public void limparCampos() {
-		deleteInstance();
-		dispose();
-		TelaCadPedido.getInstance().setVisible(true);
+		textFieldNome.setText("");
+		textFieldCpf.setText("");
+		textFieldCnpj.setText("");
+		btnProximo.setVisible(true);
+		if(tableClientProd.getRowCount() > 0){
+			tableClientProd.removeRowSelectionInterval(0, tableClientProd.getRowCount() - 1);
+		}
+		if(tableVendProd.getRowCount() > 0){
+			tableVendProd.removeRowSelectionInterval(0, tableVendProd.getRowCount() - 1);			
+		}
+		panelProduto.setVisible(false);
 	}
 	/**
 	 * Launch the application.
@@ -127,13 +138,13 @@ public class TelaCadPedido extends JFrame {
 		lblCadastroPedido.setBounds(22, 93, 173, 25);
 		contentPane.add(lblCadastroPedido);
 		
-		JPanel panelCliente = new JPanel();
+		panelCliente = new JPanel();
 		panelCliente.setLayout(null);
 		panelCliente.setBackground(Color.WHITE);
 		panelCliente.setBounds(0, 135, 594, 437);
 		contentPane.add(panelCliente);
 		
-		JPanel panelProduto = new JPanel();
+		panelProduto = new JPanel();
 		panelProduto.setBounds(0, 0, 594, 437);
 		panelCliente.add(panelProduto);
 		panelProduto.setVisible(false);
@@ -148,21 +159,18 @@ public class TelaCadPedido extends JFrame {
 				while(i > -1){
 					Produto produto = modeloProduto.getProdutoAt(i);
 					Pedido pedido = new Pedido();
-					String data;
 					Vendedor vendedor = new Vendedor();
 					ItemPedido itemPedido = new ItemPedido();
 					
 					Date date = new Date(System.currentTimeMillis()); 
-					SimpleDateFormat formatarDate = new SimpleDateFormat("dd/MM/yyyy"); 
 					
-					data = formatarDate.format(date);
 					vendedor.setNome(ValidarDados.funcionario.getNome());
 					vendedor.setCpf(ValidarDados.funcionario.getCpf());
 					itemPedido.setProduto(produto.getNome());
 					itemPedido.setQuantidade(produto.getQuantidade());
 					itemPedido.setValorTotal(itemPedido.getQuantidade()*produto.getValor());
 					
-					pedido.setData(data);
+					pedido.setData(date);
 					pedido.setVendedor(vendedor);
 					pedido.setCliente(cliente);
 					pedido.setItemPedido(itemPedido);
@@ -183,6 +191,8 @@ public class TelaCadPedido extends JFrame {
 							
 						//Atualizar tabela 
 						modeloVendProd.addProduto(p);
+						
+						Popup.cadSucesso();
 					}
 				}								
 				//TODO Gerar nota	
@@ -328,7 +338,7 @@ public class TelaCadPedido extends JFrame {
 		lblNome.setVisible(false);
 		panelCliente.add(lblNome);
 		
-		JButton btnProximo = new JButton("Pr\u00F3ximo");
+		btnProximo = new JButton("Pr\u00F3ximo");
 		btnProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
@@ -410,6 +420,11 @@ public class TelaCadPedido extends JFrame {
 		panelCliente.add(rdbtnPessoaJurdica);
 		
 		JButton button = new JButton(" Informa\u00E7\u00F5es de ajuda");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Popup.infoCadPed();
+			}
+		});
 		button.setIcon(new ImageIcon(TelaCadPedido.class.getResource("/imagem/question.png")));
 		button.setForeground(Color.BLACK);
 		button.setFont(new Font("Tahoma", Font.PLAIN, 12));
