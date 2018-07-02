@@ -108,4 +108,10 @@ public static void ConfirmarCadastro() {
 	public static void cadSucesso(){
 		JOptionPane.showMessageDialog(null, Mensagem.CADASTRADO,MSGSUC,JOptionPane.INFORMATION_MESSAGE);
 	}
+	public static void VendCadErro() {
+		JOptionPane.showMessageDialog(null, Mensagem.CADVENDERRO,MSGALERT,JOptionPane.WARNING_MESSAGE);
+	}
+	public static void GerenteCadErro() {
+		JOptionPane.showMessageDialog(null, Mensagem.CADGERENTEERRO,MSGALERT,JOptionPane.WARNING_MESSAGE);
+	}
 }

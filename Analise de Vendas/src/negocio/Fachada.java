@@ -34,15 +34,15 @@ public class Fachada {
 	
 	public Fachada(){
 		
-		IRepositorioProduto repProd = new RepProdArray();
+		/*IRepositorioProduto repProd = new RepProdArray();
 		IRepositorioFuncionario repFunc = new RepFuncArray();
 		IRepositorioVendProd repVendProd = new RepVendProdArray();
-		IRepositorioPedido repPedido = new RepPedidoArray();
+		IRepositorioPedido repPedido = new RepPedidoArray();*/
 		
-		/*IRepositorioProduto repProd = new RepProdBD();
+		IRepositorioProduto repProd = new RepProdBD();
 		IRepositorioFuncionario repFunc = new RepFuncBD();
 		IRepositorioVendProd repVendProd = new RepVendProdBD();
-		IRepositorioPedido repPedido = new RepPedidoBD();*/
+		IRepositorioPedido repPedido = new RepPedidoBD();
 		
 		vendProd = new CadastroVendProd(repVendProd);
 		produto = new CadastroProduto(repProd);

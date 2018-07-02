@@ -34,6 +34,13 @@ public class Mensagem {
 	//ClasseAssistente
 	public static final String SUBJECTSENHA = "Nova senha.";
 	public static final String TEXTSENHA = "Sua nova senha foi gerada: ";
+	//TelaCadVendedor
+	public static final String CADVENDSUC = "Vendedor cadastrado com sucesso:";
+	public static final String CADVENDERRO = "Erro ao cadastrar o vendedor:";
+	//TelaCadGerente
+	public static final String CADGERENTESUC = "Gerente cadastrado com sucesso";
+	public static final String CADGERENTEERRO = "Erro ao cadastrar o gerente";
+	
 	//Popup
 	public static final String CONFCADASTRO = "Você realmente deseja cadastrar? ";
 	public static final String CONFEXCLUIR = "Você realmente deseja excluir? ";

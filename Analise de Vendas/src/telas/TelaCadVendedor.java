@@ -1,16 +1,16 @@
+package telas;
+
 /*------------------------------------------------
  * Autor: Diogo Souza
  * Data:30/06/2018
  *------------------------------------------------
- * Descrição: Tela de Cadastro de Gerente,
- * feito pelo administrador
+ * Descrição: Tela de Cadastro de Vendedor,
+ * feito pelo gerente
  *------------------------------------------------
  * Histórico de modificação
  * Data             Autor                   Descrição
  *
  *----------------------------------------------------------------------*/
- 
-package telas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -20,7 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import entidades.Gerente;
+import entidades.Vendedor;
 import excecoes.CPFNaoEncontradoException;
 import negocio.ClasseAssistente;
 import negocio.Fachada;
@@ -40,7 +40,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 
-public class TelaCadGerente extends JFrame {
+public class TelaCadVendedor extends JFrame {
 
 	private JPanel contentPane;
 	private static TelaCadGerente instance;
@@ -79,7 +79,7 @@ public class TelaCadGerente extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaCadGerente() {
+	public TelaCadVendedor() {
 		setTitle("An\u00E1lise de Vendas");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,87 +91,114 @@ public class TelaCadGerente extends JFrame {
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255));
 		panel.setBounds(0, 135, 594, 437);
-		panel.setBackground(Color.WHITE);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setBounds(76, 63, 46, 14);
+		lblNome.setBounds(76, 84, 46, 14);
 		panel.add(lblNome);
 		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		textFieldNome = new JTextField();
-		textFieldNome.setBounds(175, 62, 250, 20);
+		textFieldNome.setBounds(175, 83, 250, 20);
 		panel.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		
 		JLabel lblCPF = new JLabel("CPF:");
-		lblCPF.setBounds(76, 116, 46, 14);
+		lblCPF.setBounds(76, 135, 46, 14);
 		panel.add(lblCPF);
 		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		textFieldCPF = new JTextField();
-		textFieldCPF.setBounds(175, 115, 140, 20);
+		textFieldCPF.setBounds(175, 134, 140, 20);
 		panel.add(textFieldCPF);
 		textFieldCPF.setColumns(10);
 		
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setBounds(76, 175, 46, 14);
+		lblEmail.setBounds(76, 185, 46, 14);
 		panel.add(lblEmail);
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		textFieldEmail = new JTextField();
-		textFieldEmail.setBounds(175, 174, 250, 20);
+		textFieldEmail.setBounds(175, 184, 250, 20);
 		panel.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
 		
 		JButton btnCadastrar = new JButton("Cadastrar");
 		btnCadastrar.addActionListener(new ActionListener() {
-			public void ActionPerformed(ActionEvent arg0) throws CPFNaoEncontradoException {
-			if(ValidarDados.validarCampoVazio(textFieldNome.getText(),textFieldCPF.getText(),textFieldEmail.getText()))	{
-				try {
-					Gerente gerentecadastrado;
-					Gerente gerente = new Gerente(textFieldNome.getText(),textFieldCPF.getText(),
-							textFieldEmail.getText(),ClasseAssistente.gerarSenha(),"Gerente");
-					gerentecadastrado = (Gerente)Fachada.getInstance().procurarFunc(textFieldCPF.getText());
-					if(gerentecadastrado == null) {
-						Fachada.getInstance().cadastrar(gerente);
-						JOptionPane.showMessageDialog(null, Mensagem.CADGERENTESUC);
-						limparcampos();
-					}else {
-						Popup.GerenteCadErro();
+			public void actionPerformed(ActionEvent arg0) {
+				if(ValidarDados.validarCampoVazio(textFieldNome.getText(), textFieldCPF.getText(), 
+						textFieldEmail.getText())) {
+					try {
+						Vendedor vendedorCadastrado;
+						Vendedor vendedor = new Vendedor(textFieldNome.getText(), textFieldCPF.getText(),
+								textFieldEmail.getText(),ClasseAssistente.gerarSenha(),"Vendedor",ValidarDados.funcionario.getCpf());
+						vendedorCadastrado = (Vendedor)Fachada.getInstance().procurarFunc(textFieldCPF.getText());
+						if(vendedorCadastrado == null) {
+							Fachada.getInstance().cadastrar(vendedor);
+							JOptionPane.showMessageDialog(null, Mensagem.CADVENDSUC);
+							limparcampos();
+						}else {
+							Popup.VendCadErro();
+						}
+						
+					}catch(NumberFormatException nfe) {
+						Popup.numberFormat();
+					} catch (CPFNaoEncontradoException e) {
+						e.printStackTrace();
 					}
-					
-				}catch(NumberFormatException nfe) {
-					Popup.numberFormat();
 				}
 			}
-			}
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+			
 		});
 		btnCadastrar.setBounds(326, 254, 99, 23);
 		panel.add(btnCadastrar);
 		
-		JLabel lblCadastroGerente = new JLabel("Cadastro de gerente");
-		lblCadastroGerente.setBounds(10, 82, 173, 25);
+		JLabel lblCadastroGerente = new JLabel("Cadastro de vendedor");
+		lblCadastroGerente.setBounds(10, 88, 216, 25);
 		lblCadastroGerente.setForeground(Color.WHITE);
 		lblCadastroGerente.setFont(new Font("Tahoma", Font.BOLD, 16));
 		contentPane.add(lblCadastroGerente);
 		
-		JButton btnAjuda = new JButton("Informa\u00E7\u00F5es de Ajuda");
-		btnAjuda.setBounds(10, 48, 152, 23);
+		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBounds(0, 0, 594, 21);
+		contentPane.add(menuBar);
+		
+		JMenu mnProduto = new JMenu("Produto");
+		menuBar.add(mnProduto);
+		
+		JMenuItem mntmCadastrar = new JMenuItem("Cadastrar");
+		mnProduto.add(mntmCadastrar);
+		
+		JMenuItem mntmGerenciar = new JMenuItem("Gerenciar");
+		mnProduto.add(mntmGerenciar);
+		
+		JMenu mnVendedor = new JMenu("Vendedor");
+		menuBar.add(mnVendedor);
+		
+		JMenuItem mntmCadastrar_1 = new JMenuItem("Cadastrar");
+		mnVendedor.add(mntmCadastrar_1);
+		
+		JMenuItem mntmGerenciar_1 = new JMenuItem("Gerenciar");
+		mnVendedor.add(mntmGerenciar_1);
+		
+		JMenu mnVendas = new JMenu("Vendas");
+		menuBar.add(mnVendas);
+		
+		JMenuItem mntmNewRelatorio = new JMenuItem("Relat\u00F3rio");
+		mnVendas.add(mntmNewRelatorio);
+		
+		JButton btnAjuda = new JButton("Informa\u00E7\u00F5es de ajuda");
+		btnAjuda.setBounds(10, 54, 152, 23);
 		btnAjuda.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnAjuda.setIcon(new ImageIcon(TelaCadGerente.class.getResource("/imagem/question.png")));
 		btnAjuda.setForeground(Color.BLACK);
 		btnAjuda.setBorder(null);
 		btnAjuda.setBorderPainted(false);
-		btnAjuda.setBackground(Color.WHITE);		
+		btnAjuda.setBackground(Color.WHITE);
 		contentPane.add(btnAjuda);
 	}
 }
